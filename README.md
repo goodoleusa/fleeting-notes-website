@@ -6,6 +6,41 @@ To publish your own notes, see the [linked-blog-starter](https://github.com/matt
 
 ---
 
+## Obsidian → Web in 5 Steps
+
+Edit notes in Obsidian and push to a live website. One-time setup, then: **edit → commit → push**.
+
+### One-time setup
+
+1. **Create your content folder** — Copy the example: `cp -r common_md.example common_md`
+2. **Allow content in git** — Remove the line `/common_md/` from `.gitignore` so your notes get committed.
+3. **Connect to Vercel** — Import the repo at [vercel.com](https://vercel.com). No extra config needed.
+
+### Your daily workflow
+
+4. **Open `common_md` in Obsidian** — File → Open folder → select the `common_md` folder in your project.
+5. **Edit, commit, push** — When you’re ready:
+
+   ```bash
+   git add common_md/
+   git commit -m "Update notes"
+   git push
+   ```
+
+   Vercel rebuilds and deploys automatically.
+
+### Quick reference
+
+| Put your note in | URL on the site |
+|------------------|-----------------|
+| `common_md/posts/my-post.md` | `/posts/my-post` (blog) |
+| `common_md/docs/guide/page.md` | `/docs/guide/page` (sidebar docs) |
+| `common_md/about.md` | `/about` |
+
+**Links:** Use standard markdown `[text](Other Note.md)` — Obsidian wikilinks `[[Note]]` are not supported.
+
+---
+
 ## Where to Put Your Markdown Files
 
 Content is loaded from the directory set by **`COMMON_MD_DIR`** in `.env` (default: `./common_md`).
