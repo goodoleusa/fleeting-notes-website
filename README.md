@@ -100,3 +100,22 @@ Add `title`, `date`, and optionally `excerpt` so the site can render metadata co
 - `npm run build` — copies images, then builds for production
 
 The `copyimages` script runs before dev/build and syncs non-markdown assets from `COMMON_MD_DIR` to `public/md_assets`.
+
+---
+
+## Deploying on Vercel
+
+1. **Connect your repo** to [Vercel](https://vercel.com). Import the project and deploy.
+
+2. **Environment variables** (optional): In Vercel → Project → Settings → Environment Variables, add:
+   - `COMMON_MD_DIR` — path to markdown content (default: `./common_md`)
+   - `MD_ASSET_DIR` — where images are copied (default: `./public/md_assets`)
+   - `NEXT_PUBLIC_GTAG_ID` — for Google Analytics (optional)
+
+3. **Include your content**:
+   - Option A: Commit a `common_md` folder with your markdown and remove it from `.gitignore` if you want it in the repo.
+   - Option B: Use a monorepo or build step that fetches/clones your content before build.
+   - If `common_md` is missing, the build still succeeds; you’ll just have an empty site until you add content.
+
+4. **Build command**: `npm run build` (default)  
+   **Output directory**: `.next` (Vercel auto-detects Next.js)
