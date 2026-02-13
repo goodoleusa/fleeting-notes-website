@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode
 }
 
-const Layout = ({ children }: Props) => {
+export default function Layout({ children }: Props) {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <Meta />
@@ -17,22 +17,10 @@ const Layout = ({ children }: Props) => {
         {children}
       </main>
       <Footer />
+      {process.env.NEXT_PUBLIC_GTAG_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GTAG_ID} />
+      )}
+      <GoogleTagManager gtmId="AW-16663863890" />
     </div>
   )
 }
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-      <GoogleAnalytics gaId="G-TLD2XHD410" />
-       <GoogleTagManager gtmId="AW-16663863890" />
-    </html>
-  )
-}
-
-export default Layout
