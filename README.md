@@ -6,6 +6,41 @@ To publish your own notes, see the [linked-blog-starter](https://github.com/matt
 
 ---
 
+## Obsidian → Web in 5 Steps
+
+Edit notes in Obsidian and push to a live website. One-time setup, then: **edit → commit → push**.
+
+### One-time setup
+
+1. **Create your content folder** — Copy the example: `cp -r common_md.example common_md`
+2. **Allow content in git** — Remove the line `/common_md/` from `.gitignore` so your notes get committed.
+3. **Connect to Vercel** — Import the repo at [vercel.com](https://vercel.com). No extra config needed.
+
+### Your daily workflow
+
+4. **Open `common_md` in Obsidian** — File → Open folder → select the `common_md` folder in your project.
+5. **Edit, commit, push** — When you’re ready:
+
+   ```bash
+   git add common_md/
+   git commit -m "Update notes"
+   git push
+   ```
+
+   Vercel rebuilds and deploys automatically.
+
+### Quick reference
+
+| Put your note in | URL on the site |
+|------------------|-----------------|
+| `common_md/posts/my-post.md` | `/posts/my-post` (blog) |
+| `common_md/docs/guide/page.md` | `/docs/guide/page` (sidebar docs) |
+| `common_md/about.md` | `/about` |
+
+**Links:** Use standard markdown `[text](Other Note.md)` — Obsidian wikilinks `[[Note]]` are not supported.
+
+---
+
 ## Where to Put Your Markdown Files
 
 Content is loaded from the directory set by **`COMMON_MD_DIR`** in `.env` (default: `./common_md`).
@@ -100,3 +135,22 @@ Add `title`, `date`, and optionally `excerpt` so the site can render metadata co
 - `npm run build` — copies images, then builds for production
 
 The `copyimages` script runs before dev/build and syncs non-markdown assets from `COMMON_MD_DIR` to `public/md_assets`.
+
+---
+
+## Deploying on Vercel
+
+1. **Connect your repo** to [Vercel](https://vercel.com). Import the project and deploy.
+
+2. **Environment variables** (optional): In Vercel → Project → Settings → Environment Variables, add:
+   - `COMMON_MD_DIR` — path to markdown content (default: `./common_md`)
+   - `MD_ASSET_DIR` — where images are copied (default: `./public/md_assets`)
+   - `NEXT_PUBLIC_GTAG_ID` — for Google Analytics (optional)
+
+3. **Include your content**:
+   - Option A: Commit a `common_md` folder with your markdown and remove it from `.gitignore` if you want it in the repo.
+   - Option B: Use a monorepo or build step that fetches/clones your content before build.
+   - If `common_md` is missing, the build still succeeds; you’ll just have an empty site until you add content.
+
+4. **Build command**: `npm run build` (default)  
+   **Output directory**: `.next` (Vercel auto-detects Next.js)
